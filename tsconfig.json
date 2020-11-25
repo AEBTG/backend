@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {            
+    "target": "es6",
+    "module": "commonjs",                     
+    "outDir": "dist"
+   },
+  "include": [
+    "./src/**/*",
+    "./test/**/*.ts"
+  ],
+  "exclude": [
+    "**/node_modules"
+  ],
+  "ts-node": {
+    "transpileOnly": true
+  }
+}

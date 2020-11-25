@@ -1,0 +1,37 @@
+version: '3.7'
+
+volumes:
+    mongodb_data_container:
+
+x-shared_environment: &shared_environment
+    LOG_LEVEL: ${LOG_LEVEL:-debug}
+
+services:
+    app:
+        build:
+            context: .
+#        env_file: .env
+        environment:
+            <<: *shared_environment
+            DB_URI: mongodb://db:27017/aeBTG
+        depends_on:
+            - db
+        ports:
+            - '4000:4000'
+        command: ["npm", "run", "start"]
+    db:
+        image: mongo:4.2.9
+        restart: always
+#        env_file: .env
+        container_name: aeBTG-db
+        volumes:
+            - mongodb_data_container:/data/db
+        environment:
+            # - MONGO_INITDB_ROOT_USERNAME=assetify
+            # - MONGO_INITDB_ROOT_PASSWORD=12348765
+            # - MONGO_INITDB_DATABASE=assetify
+            # - DATABASE_USERNAME=assetify
+            # - DATABASE_PASSWORD=12348765
+            - MONGO_PORT=27017
+        ports:
+            - '27017:27017'
