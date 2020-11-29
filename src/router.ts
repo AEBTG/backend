@@ -1,8 +1,8 @@
 import * as express from 'express';
+import * as exchange from './controllers/aeActions';
 
 const router = express.Router();
 
-//TODO
+router.post('/api/orders/buyaebtg', exchange.getAEBTG);
 
-
-export default router
+export default router;

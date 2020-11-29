@@ -25,7 +25,6 @@ export const OrderSchema = new Schema(
     sendAddress: String, //Address of the user to receive the coins
     receiveAddress: String, //Our address that we are using
     amount: Number,
-    hdPath: String, // applicable only for receiving BTG
     txId: {
       type: String,
       default: null

@@ -13,6 +13,8 @@ import { mongoUri, mongooseOptions } from './config/database';
 import * as AEFetchService from './services/AEFetchService';
 import * as ContractController from './Aeternity/contract-controller';
 
+import * as IssuedAddress from './model/IssuedAddresses';
+
 dotenv.config();
 
 // if (!process.env.PORT) {

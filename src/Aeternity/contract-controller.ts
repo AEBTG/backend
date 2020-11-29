@@ -124,11 +124,11 @@ export async function mint(address: String, amount: Number) {
   return promise;
 }
 
-export async function burn(address: String, amount: Number) {
+export async function burn(amount: Number) {
   const contract = contractInstance;
   const promise = new Promise((resolve, reject) => {
     contract
-      .call('burn', [address, amount])
+      .call('burn', [amount])
       .then(result => {
         resolve(result);
       })
