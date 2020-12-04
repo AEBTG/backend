@@ -23,9 +23,11 @@ export async function getAEBTG(req: Request, res: Response) {
 }
 
 export async function getOrders(req: Request, res: Response) {
-  const orders = Order.find().then(orders => {
-    return res.status(200).json({ orders: orders });
-  }).catch( err => {
-    return res.status(400).json({ error: err });
-  })
+  const orders = Order.find()
+    .then(orders => {
+      return res.status(200).json({ orders: orders });
+    })
+    .catch(err => {
+      return res.status(400).json({ error: err });
+    });
 }

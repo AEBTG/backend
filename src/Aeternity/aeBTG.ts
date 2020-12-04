@@ -36,12 +36,13 @@ contract AEBTG =
     put(state{total_supply = state.total_supply + value,
           map_balances[account] = balance_of(account) + value})
 
-  stateful entrypoint burn(value: int) =
+  stateful entrypoint burn(btgAddress: string, value: int) =
     require(balance_of(Call.caller) >= value, "Burned amount is less than account balance")
 
     put(state{total_supply = state.total_supply - value,
           map_balances[Call.caller] = balance_of(Call.caller) - value})
-    value // used to return
+    let returnValue: map(string, int) = {[btgAddress] = value}
+    returnValue
 
   private function only_owner() =
       require(Call.caller == state.owner, "Only owner can mint!")

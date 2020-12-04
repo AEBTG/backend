@@ -10,7 +10,6 @@ if (process.env.explorerURL) {
   explorerURL = 'https://testnet.aeternal.io/';
 }
 
-
 const network = bitcoin.networks.bitcoingoldtestnet;
 
 const mnemonic = 'praise you muffin lion enable neck grocery crumble super myself license ghost';
@@ -18,7 +17,7 @@ const seed = bip39.mnemonicToSeedSync(mnemonic);
 const masterKey = bip32.fromSeed(seed);
 
 const btgOptions = {
-    network: network
+  network: network
 };
 
 function getAddress(node: any, network?: any): string {

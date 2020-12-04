@@ -11,6 +11,7 @@ import { logger } from './utils/logger';
 import { mongoUri, mongooseOptions } from './config/database';
 
 import * as AEFetchService from './services/AEFetchService';
+import * as BTGFetchService from './services/BTGFetchService';
 import * as ContractController from './Aeternity/contract-controller';
 
 import * as IssuedAddress from './model/IssuedAddresses';
@@ -38,6 +39,8 @@ mongoose
 
 AEFetchService.startService();
 AEFetchService.getAllTransactions();
+BTGFetchService.startService();
+
 ContractController.initialize();
 
 app.use(helmet());
