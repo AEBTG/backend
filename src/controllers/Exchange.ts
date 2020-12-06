@@ -13,7 +13,8 @@ export async function getAEBTG(req: Request, res: Response) {
   const order = new Order({
     action: ACTION.buyAEBTG,
     sendAddress: sendAddress,
-    receiveAddress: issuedAddress,
+    receiveAddress: issuedAddress.address,
+    hdPath: issuedAddress.path,
     amount: amount
   });
 

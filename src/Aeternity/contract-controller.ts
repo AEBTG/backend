@@ -20,7 +20,7 @@ const ACCOUNT = MemoryAccount({
   }
 });
 
-export const contractAddress = 'ct_2hebd7mbSrkGLnEWMaNReoJ45RdheZU8k2dBRdewfsLDK717sf';
+export const contractAddress = 'ct_gtjR37cYNFwaseW6gvG3j3iGEzVXaaueFQPk8JRaKqMXF2YYX';
 export let contractInstance: any;
 
 const code = Contract;
@@ -38,15 +38,17 @@ export async function initialize() {
   contractInstance = await ae.getContractInstance(code, { contractAddress });
 }
 
-export async function compileContract(len, bor) {
+export async function deployContract(): Promise<any> {
+  await initialize();
   const contract = contractInstance;
-
+  
   const promise = new Promise((resolve, reject) => {
     contract
       .deploy()
       .then(result => {
         // result.contractCode = contract;
         // console.log(contract.bytecode.toString());
+        console.log(result);
         resolve(result);
       })
       .catch(e => {

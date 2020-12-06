@@ -58,7 +58,7 @@ export interface IssuedAddressDocument extends Document {
 
 export const IssuedAddress: Model<IssuedAddressDocument> = model('IssuedAddress', IssuedAddressSchema);
 
-export async function getNewAddress(): Promise<string> {
+export async function getNewAddress(): Promise<IssuedAddressDocument> {
   const wallets = await IssuedAddress.find()
     .sort({ addressIndex: -1 })
     .exec();
@@ -78,5 +78,5 @@ export async function getNewAddress(): Promise<string> {
   const newIssuedAddress = new IssuedAddress({ addressIndex: nextIndex, path: path, address: newWalletAddress });
   await newIssuedAddress.save();
 
-  return newWalletAddress;
+  return newIssuedAddress;
 }

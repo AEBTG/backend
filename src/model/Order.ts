@@ -9,8 +9,6 @@ export const actionArray = Object.keys(ACTION).map(key => ACTION[key]);
 
 export enum STATUS {
   created = 'created', // initial state
-  pending = 'pending', // transaction is in the mempool, but not confirmed
-  confirmed = 'confirmed', // transaction is confirmed
   completed = 'completed' // the amount was sent to the user
 }
 
@@ -25,6 +23,7 @@ export const OrderSchema = new Schema(
     sendAddress: String, //Address of the user to receive the coins
     receiveAddress: String, //Our address that we are using
     amount: Number,
+    hdPath: String,
     txId: {
       type: String,
       default: null

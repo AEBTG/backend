@@ -15,6 +15,8 @@ import * as BTGFetchService from './services/BTGFetchService';
 import * as ContractController from './Aeternity/contract-controller';
 
 import * as IssuedAddress from './model/IssuedAddresses';
+import * as BTGController from './controllers/btg-controller';
+import * as aeController from './Aeternity/contract-controller';
 
 dotenv.config();
 

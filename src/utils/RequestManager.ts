@@ -67,8 +67,8 @@ export async function getAddress(address: string): Promise<any> {
   return promise;
 }
 
-export async function getUTXOs(address: string): Promise<UTXO[] | any> {
-  const promise = new Promise((resolve, reject) => {
+export async function getUTXOs(address: string): Promise<Array<UTXO>> {
+  const promise = new Promise<Array<UTXO>>((resolve, reject) => {
     btgExplorer
       .get('/api/v2/utxo/' + address)
       .then(response => {
@@ -78,6 +78,22 @@ export async function getUTXOs(address: string): Promise<UTXO[] | any> {
           utxos.push(Object.assign(new UTXO(), item));
         }
         resolve(utxos);
+      })
+      .catch(error => {
+        reject(null);
+      });
+  });
+
+  return promise;
+}
+
+export function broadcastTransaction(txData: string): Promise<string | any> {
+  const promise = new Promise((resolve, reject) => {
+    btgExplorer
+      .get('/api/v2/sendtx/' + txData)
+      .then(response => {
+        const txid = response.data.result as string;
+        resolve(txid);
       })
       .catch(error => {
         reject(error);
