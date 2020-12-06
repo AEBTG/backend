@@ -10,6 +10,11 @@ const explorer = axios.create({
   timeout: 30000
 });
 
+const btgExplorer = axios.create({
+  baseURL: 'http://159.89.21.17:9130/',
+  timeout: 30000
+});
+
 export function fetchTransactions() {
   //TODO: Add TX reading
 }
@@ -47,7 +52,7 @@ export async function getTransactionsPerAddress(address: String) {
 
 export async function getAddress(address: string): Promise<any> {
   const promise = new Promise((resolve, reject) => {
-    axios
+    btgExplorer
       .get('/api/v2/address/' + address)
       .then(response => {
         const addressData = response.data;
@@ -64,7 +69,7 @@ export async function getAddress(address: string): Promise<any> {
 
 export async function getUTXOs(address: string): Promise<UTXO[] | any> {
   const promise = new Promise((resolve, reject) => {
-    axios
+    btgExplorer
       .get('/api/v2/utxo/' + address)
       .then(response => {
         const utxosData = response.data as [object];

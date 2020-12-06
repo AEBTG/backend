@@ -33,6 +33,7 @@ export const IssuedAddressSchema = new Schema(
       type: Number,
       default: 1
     },
+    path: String,
     address: String
   },
   {
@@ -51,6 +52,7 @@ export interface IssuedAddressDocument extends Document {
   account: number;
   change: number;
   addressIndex: number;
+  path: string;
   address: string;
 }
 
@@ -68,10 +70,12 @@ export async function getNewAddress(): Promise<string> {
     nextIndex = lastWallet.addressIndex + 1;
   }
 
-  const derivedNode = masterKey.derivePath(`m/${purpose}'/${coinType}'/${account}'/${change}'/${nextIndex}`);
+  const path = `m/${purpose}'/${coinType}'/${account}'/${change}'/${nextIndex}`;
+  const derivedNode = masterKey.derivePath(path);
+  derivedNode.network = bitcoin.networks.bitcoingoldtestnet;
   const newWalletAddress = getAddress(derivedNode, network);
 
-  const newIssuedAddress = new IssuedAddress({ addressIndex: nextIndex, address: newWalletAddress });
+  const newIssuedAddress = new IssuedAddress({ addressIndex: nextIndex, path: path, address: newWalletAddress });
   await newIssuedAddress.save();
 
   return newWalletAddress;
