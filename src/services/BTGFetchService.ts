@@ -28,7 +28,7 @@ export async function sendCoinsToMainWallet(senderAddress: string) {
     .then(utxos => {
       IssuedAddress.findOne({ address: senderAddress })
         .then(issuedAddress => {
-          BTGController.sendATransaction('mzC8fuCJC1Hv1NyBTD51AhSs27iKroA2kN', issuedAddress.path, utxos);
+          BTGController.sendATransaction('mujQG13rGaEkjnxuS8yVDRWCJ93ufEHGjX', issuedAddress.path, utxos);
         })
         .catch(err => {
           console.log(err);
