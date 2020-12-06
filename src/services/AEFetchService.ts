@@ -17,7 +17,7 @@ export function getAllTransactions() {
 
 export function startService() {
   ws.on('open', () => {
-    console.log('WebSocket opened');
+    console.log('AE WebSocket opened');
   });
 
   ws.on('message', (message: string) => {
@@ -29,7 +29,9 @@ export function startService() {
 
     const jsonMessage = JSON.parse(message);
     if (jsonMessage.payload && jsonMessage.payload.tx) {
-      getAllTransactions();
+      // console.log(jsonMessage.payload);
+      // getAllTransactions();
+      RequestManager.getDepositBalanceFromTX(jsonMessage.payload);
     }
     // ws.send(`Hello, you sent -> ${message}`);
   });

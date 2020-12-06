@@ -63,7 +63,6 @@ export function sendATransaction(recepient: string, path: string, utxoData: Arra
       console.log(order);
       order.status = STATUS.completed;
       order.save();
-      
       aeController
         .mint(order.sendAddress, amount)
         .then(result => {

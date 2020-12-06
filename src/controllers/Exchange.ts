@@ -3,6 +3,7 @@ import { Request, Response, NextFunction } from 'express';
 import { Order, ACTION } from '../model/Order';
 import { getNewAddress } from '../model/IssuedAddresses';
 import { resourceUsage } from 'process';
+import * as BTGFetchService from '../services/BTGFetchService';
 
 export async function getAEBTG(req: Request, res: Response) {
   const sendAddress = req.body.sendAddress;
@@ -19,7 +20,7 @@ export async function getAEBTG(req: Request, res: Response) {
   });
 
   await order.save();
-
+  BTGFetchService.startService();
   return res.status(201).json({ order: order });
 }
 

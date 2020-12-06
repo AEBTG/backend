@@ -2,13 +2,9 @@
 'use strict';
 
 import { AE_AMOUNT_FORMATS } from '@aeternity/aepp-sdk/es/utils/amount-formatter';
-import {
-  Universal as Ae,
-  Node,
-  MemoryAccount,
-  Crypto
-} from '@aeternity/aepp-sdk';
+import { Universal as Ae, Node, MemoryAccount, Crypto } from '@aeternity/aepp-sdk';
 import Contract from './aeBTG';
+import { ReceivedAETransaction, ReceivedAETransactionDocument } from '../model/ReceivedAETransactions';
 
 const NODE_URL = process.env.AE_SDK || 'https://sdk-testnet.aepps.com';
 const COMPILER_URL = process.env.AE_COMPILER_SDK || 'https://compiler.aepps.com'; // required for using Contract
@@ -41,7 +37,7 @@ export async function initialize() {
 export async function deployContract(): Promise<any> {
   await initialize();
   const contract = contractInstance;
-  
+
   const promise = new Promise((resolve, reject) => {
     contract
       .deploy()
@@ -150,4 +146,12 @@ export function generateKeys() {
   console.log(`Secret key: ${privKey}`);
   console.log(`Public key: ${pubKey}`);
   return { pubkey: pubKey, privKey: privKey };
+}
+
+export async function decodeCallData(callData: string): Promise<any> {
+  const decodedData = await ae.contractDecodeCallDataBySourceAPI(Contract, 'burn', callData);
+  // console.log(decodedData);
+  const address: string = decodedData.arguments[0].value;
+  const amount: number = decodedData.arguments[1].value;
+  return { address, amount };
 }

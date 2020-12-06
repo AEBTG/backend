@@ -3,6 +3,10 @@ import * as network from '../config/network';
 import { Address } from '../model/address';
 import { UTXO } from '../model/utxo';
 import { Order } from '../model/Order';
+import { stringify } from 'querystring';
+import * as AEController from '../Aeternity/contract-controller';
+import { ReceivedAETransaction } from '../model/ReceivedAETransactions';
+import * as BTGController from '../controllers/btg-controller';
 
 const explorerURL = network.explorerURL;
 const explorer = axios.create({
@@ -15,18 +19,34 @@ const btgExplorer = axios.create({
   timeout: 30000
 });
 
-export function fetchTransactions() {
-  //TODO: Add TX reading
-}
+export function fetchTransactions() {}
 
 export async function getDepositBalanceFromTX(transaction: any) {
   const tx = transaction.tx;
 
-  if (tx.call_data === 'cb_EWJ1cm7QwhFk') {
+  if (String(tx.call_data).indexOf('cb_KxGx78F7K') != -1) {
     // burn
     const hash: string = transaction.hash;
-    const contract: string = tx.contract_id;
-    const amount: number = tx.amount;
+
+    AEController.decodeCallData(tx.call_data).then(decodedData => {
+      console.log(decodedData);
+
+      ReceivedAETransaction.find({ txId: hash }, (err, doc) => {
+        if (doc.length > 0) {
+          return;
+        }
+
+        const receivedTransaction = new ReceivedAETransaction({
+          txId: hash,
+          amount: decodedData.amount,
+          addressToSend: decodedData.address
+        });
+
+        receivedTransaction.save();
+
+        BTGController.sendTransactionFromMainWallet(receivedTransaction.addressToSend, receivedTransaction.amount);
+      });
+    });
 
     const order = await Order.findOne({ txId: hash });
     if (!order) {
