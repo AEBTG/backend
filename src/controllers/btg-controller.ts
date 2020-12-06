@@ -37,7 +37,7 @@ export function sendATransaction(recepient: string, path: string, utxoData: [UTX
       key,
       undefined,
       bitcoin.Transaction.SIGHASH_ALL | bitcoin.Transaction.SIGHASH_FORKID,
-      100
+      amount
     );
   }
 
