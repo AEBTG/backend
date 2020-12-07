@@ -1,9 +1,8 @@
 const axios = require('axios').default;
 import * as network from '../config/network';
-import { Address } from '../model/address';
-import { UTXO } from '../model/utxo';
+import { Address } from '../model/Address';
+import { UTXO } from '../model/UTXO';
 import { Order } from '../model/Order';
-import { stringify } from 'querystring';
 import * as AEController from '../Aeternity/contract-controller';
 import { ReceivedAETransaction } from '../model/ReceivedAETransactions';
 import * as BTGController from '../controllers/btg-controller';
